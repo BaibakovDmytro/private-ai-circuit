@@ -1,0 +1,36 @@
+# Terraform state — never commit these
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Variables with real values — keep example, ignore actual
+terraform.tfvars
+*.auto.tfvars
+
+# SSH keys — never commit
+*.pem
+*.pub
+id_rsa
+id_ed25519
+hermes-ai-key
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# macOS
+.DS_Store
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo

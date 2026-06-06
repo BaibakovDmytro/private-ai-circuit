@@ -1,0 +1,46 @@
+# Private AI Circuit — Configuration
+# Copy this file: cp terraform.tfvars.example terraform.tfvars
+# Then fill in your values below.
+
+# ── Required ─────────────────────────────────────────────────────────────────
+
+# Your current public IP (used to restrict SSH and Hermes port access)
+# Find it: curl ifconfig.me
+my_ip = "0.0.0.0"   # ← CHANGE THIS before terraform apply
+
+# Project name — used as prefix for all AWS resource names
+client_name = "private-ai"
+
+# ── Instance ──────────────────────────────────────────────────────────────────
+
+# GPU instance type
+# g4dn.xlarge  — T4 16GB,  ~$0.53/hr  ← recommended for solo/small team
+# g5.xlarge    — A10G 24GB, ~$1.01/hr  ← for 32B models
+# g5.4xlarge   — A10G 24GB, ~$1.62/hr  ← for faster inference
+instance_type = "g4dn.xlarge"
+
+# Root volume size in GB
+# 80GB  — fits 2–3 models (7B–14B)
+# 120GB — fits 4–5 models or one large 32B
+volume_size_gb = 80
+
+# ── Region ────────────────────────────────────────────────────────────────────
+
+# AWS region
+# eu-central-1  — Frankfurt  (good for EU)
+# eu-west-1     — Ireland    (slightly cheaper)
+# us-east-1     — N. Virginia (cheapest GPU spot prices)
+region = "eu-central-1"
+
+# ── Auto-stop ─────────────────────────────────────────────────────────────────
+
+# Enable automatic shutdown when GPU is idle
+auto_stop_enabled = true
+
+# GPU utilization threshold (%) — below this = idle
+# NOTE: full Blueprint uses GPU metric; free tier uses CPU metric
+low_cpu_threshold = 8
+
+# How long (minutes) below threshold before stopping
+# CloudWatch evaluates 2 periods, so actual time = idle_minutes × 2
+idle_minutes = 25

@@ -4,6 +4,13 @@
 
 > Hermes Desktop · Ollama · AWS EC2 · Auto-stop · Terraform
 
+You can plug this private AI circuit into any modern development environment:
+- **VS Code / Neovim:** via the popular `Continue.dev` extension.
+- **Cursor / Cline / Roo Code:** just point the base URL to your EC2 instance IP.
+- **JetBrains (IntelliJ, PyCharm):** via AI Assistant or third-party LLM plugins.
+
+Your development workflow stays exactly the same — but your AI autocomplete and chat now run on a dedicated AWS GPU inside your secure perimeter.
+
 ---
 
 ## What this is

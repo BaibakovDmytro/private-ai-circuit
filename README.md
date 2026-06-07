@@ -160,16 +160,28 @@ When stopped: you pay only for EBS — about **$0.10/day**.
 
 ---
 
-## Security notes
+## Security
 
-This free tier has known limitations:
+**Access is restricted to your IP by default.**  
+The Security Group allows SSH (port 22) and Hermes Gateway (port 8642) only from the IP you set in `terraform.tfvars`. Terraform will refuse to deploy if `my_ip` is left as `0.0.0.0` — the validation will catch it.
 
-- ⚠️ Security Group defaults to `0.0.0.0/0` — **change `my_ip` in tfvars before deploying**
-- ⚠️ No Elastic IP — public IP changes after every start
-- ⚠️ Lambda IAM uses broad policy — full Blueprint uses least-privilege inline policy
-- ⚠️ No VPC isolation — instance runs in default VPC
+```hcl
+# terraform.tfvars — required before terraform apply
+my_ip = "your.real.ip.address"   # run: curl ifconfig.me
+```
 
-All of these are fixed in the full Blueprint.
+**SSH authentication** uses ED25519 key pairs only. Password authentication is disabled. `fail2ban` is installed and active.
+
+**Known limitations of the free tier** (fixed in full Blueprint):
+
+| Limitation | Free tier | Full Blueprint |
+|---|---|---|
+| Elastic IP | No — IP changes after restart | ✓ Static IP |
+| Lambda IAM | Broad policy | ✓ Least-privilege, instance-scoped |
+| VPC isolation | Default VPC | ✓ Dedicated VPC + private subnets |
+| Hermes Gateway auth | No token | ✓ Gateway token configured |
+
+**Bottom line:** the free tier is safe for personal use when `my_ip` is set correctly. For team deployments or client environments, use the full Blueprint.
 
 ---
 

@@ -15,7 +15,7 @@ Your development workflow stays exactly the same — but your AI autocomplete an
 
 ## What this is
 
-A Terraform blueprint that provisions an isolated AWS GPU instance for running local AI models (Ollama) with [Hermes Desktop](https://hermesdesktop.ai) Remote Gateway.
+A Terraform blueprint that provisions an isolated AWS GPU instance for running local AI models (Ollama) with [Hermes Desktop](https://hermes-agent.nousresearch.com/) Remote Gateway.
 
 Your team gets:
 - Unlimited AI requests — no rate limits, no per-seat licensing

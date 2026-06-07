@@ -92,6 +92,9 @@ One repository. One paid package. Here's exactly what's in each.
 
 ### Deploy
 
+⚠️ Disclaimer: ---> This blueprint deploys real infrastructure on AWS. GPU instances (such as g4dn.xlarge) are not covered by the AWS Free Tier. You will be billed by AWS for the time the instance is running and for the storage used. Remember to run terraform destroy when you are done to avoid unexpected charges.
+
+
 ```bash
 git clone https://github.com/BaibakovDmytro/private-ai-circuit
 cd private-ai-circuit

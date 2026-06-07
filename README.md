@@ -175,7 +175,11 @@ Yes. Ollama exposes an OpenAI-compatible API on port 11434. Works with Continue,
 For coding: `qwen2.5-coder:7b` (fast) or `qwen2.5-coder:14b` (quality). For general use: `llama3.1:8b`. Full model selector with hardware detection is in the paid Blueprint.
 
 **What if I forget to stop the instance?**  
-The CloudWatch alarm stops it automatically after 25 minutes of GPU idle. You pay ~$0.10/day for storage while stopped.
+The CloudWatch alarm stops it automatically after 25 minutes of idle. You pay ~$0.10/day for storage while stopped.
+
+> ⚠️ **Note on Auto-Stop:** Out of the box, this architecture uses standard AWS CPU metrics for idle detection. If you plan to run continuous batch jobs or heavy background scripts that take longer than 45 minutes of pure GPU execution without CPU load, we highly recommend increasing the `idle_minutes` variable in your `terraform.tfvars` or setting `auto_stop_enabled = false` to prevent early shutdowns.
+
+
 
 **Does my code leave AWS?**  
 No. The model runs inside your EC2 instance. Requests go from your laptop → your EC2 → back. Nothing touches OpenAI or Anthropic servers.

@@ -29,10 +29,10 @@ output "next_steps" {
 
     To get your public IP and SSH command:
       aws ec2 describe-instances \
-        --filters "Name=tag:Name,Values=${var.client_name}-private-ai-gpu" \
-        --region ${var.region} \
-        --query "Reservations[0].Instances[0].PublicIpAddress" \
-        --output text
+  --filters "Name=tag:Name,Values=private-ai-private-ai-gpu" "Name=instance-state-name,Values=running" \
+  --region us-east-1 \
+  --query "Reservations[0].Instances[0].PublicIpAddress" \
+  --output text
 
     Note: user_data.sh (auto-installs Ollama, NVIDIA drivers, Hermes) 
     is not included in the free tier. Manual setup required.

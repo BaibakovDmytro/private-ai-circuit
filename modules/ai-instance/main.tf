@@ -27,7 +27,7 @@ resource "aws_key_pair" "ai_key" {
 # Full Blueprint adds VPC isolation and stricter egress rules.
 resource "aws_security_group" "ai_sg" {
   name        = "${var.client_name}-ai-sg"
-  description = "Private AI Circuit — SSH and Hermes Gateway"
+  description = "Private AI Circuit - SSH and Hermes Gateway"
 
   ingress {
     description = "SSH from operator IP"

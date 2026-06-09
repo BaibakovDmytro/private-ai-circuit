@@ -1,17 +1,17 @@
 # ── AMI ───────────────────────────────────────────────────────────────────────
-# Full Blueprint uses a pinned, tested Ubuntu 22.04 AMI data source.
+# Full Blueprint uses a pinned, tested Ubuntu 24.04 AMI data source.
 # This free tier version uses a static AMI ID — update for your region.
-# Ubuntu 22.04 LTS AMI IDs by region (as of 2025):
+# Ubuntu 24.04 LTS AMI IDs by region (as of 2025):
 #   eu-central-1 : ami-0faab6bdbac9486fb
 #   eu-west-1    : ami-0905a3c97561e0b69
-#   us-east-1    : ami-0c7217cdde317cfec
+#   us-east-1    : ami-0866a3c8686eaeeba
 #
 # Always verify current AMI at: https://cloud-images.ubuntu.com/locator/ec2/
 locals {
   ami_map = {
     "eu-central-1" = "ami-0faab6bdbac9486fb"
     "eu-west-1"    = "ami-0905a3c97561e0b69"
-    "us-east-1"    = "ami-0c7217cdde317cfec"
+    "us-east-1"    = "ami-0866a3c8686eaeeba"
   }
   ami_id = lookup(local.ami_map, var.region, "ami-0faab6bdbac9486fb")
 }
@@ -19,7 +19,7 @@ locals {
 # ── SSH Key ───────────────────────────────────────────────────────────────────
 resource "aws_key_pair" "ai_key" {
   key_name   = "${var.client_name}-ai-key"
-  public_key = file("~/.ssh/hermes-ai-key.pub")
+  public_key = file(pathexpand(var.ssh_public_key_path))
 }
 
 # ── Security Group ────────────────────────────────────────────────────────────
@@ -86,8 +86,8 @@ resource "aws_iam_instance_profile" "ai_profile" {
 
 # ── EC2 Instance ──────────────────────────────────────────────────────────────
 # Note: user_data is not included in the free tier.
-# After deploy, you'll have a blank Ubuntu instance.
-# Manual setup: https://github.com/your-handle/private-ai-circuit/wiki/Manual-Setup
+# After deploy, you'll have a blank Ubuntu 24.04 instance.
+# Manual setup guide: https://github.com/BaibakovDmytro/private-ai-circuit/wiki/Manual-Setup
 resource "aws_instance" "ai_gpu" {
   ami                    = local.ami_id
   instance_type          = var.instance_type
@@ -103,7 +103,8 @@ resource "aws_instance" "ai_gpu" {
   }
 
   # user_data intentionally omitted in free tier
-  # Full Blueprint auto-installs: NVIDIA driver, Docker, Ollama, Hermes Gateway
+  # Full Blueprint auto-installs: NVIDIA driver 550, Docker, Ollama, Hermes Gateway
+  # Get it here: https://payhip.com/b/nkpSv
 
   metadata_options {
     http_tokens = "required"  # IMDSv2 only — security best practice

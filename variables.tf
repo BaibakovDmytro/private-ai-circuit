@@ -30,6 +30,20 @@ variable "my_ip" {
   }
 }
 
+variable "ssh_public_key_path" {
+  description = <<-EOT
+    Path to your SSH public key file.
+    Linux/Mac : ~/.ssh/hermes-ai-key.pub
+    Windows   : C:/Users/YourName/.ssh/hermes-ai-key.pub
+
+    Generate with:
+      Linux/Mac : ssh-keygen -t ed25519 -f ~/.ssh/hermes-ai-key
+      Windows   : ssh-keygen -t ed25519 -f $env:USERPROFILE\.ssh\hermes-ai-key
+  EOT
+  type        = string
+  default     = "~/.ssh/hermes-ai-key.pub"
+}
+
 variable "instance_type" {
   description = "EC2 GPU instance type"
   type        = string
@@ -59,7 +73,7 @@ variable "auto_stop_enabled" {
 }
 
 variable "low_cpu_threshold" {
-  description = "CPU utilization (%) below which the instance is considered idle. Note: free tier uses CPU metric — see README for GPU metric limitation."
+  description = "CPU utilization (%) below which the instance is considered idle."
   type        = number
   default     = 8
 
@@ -70,7 +84,7 @@ variable "low_cpu_threshold" {
 }
 
 variable "idle_minutes" {
-  description = "Minutes below threshold before auto-stop triggers. Actual wait = idle_minutes × 2 (CloudWatch evaluates 2 periods)."
+  description = "Minutes below threshold before auto-stop triggers. Actual wait = idle_minutes × 2."
   type        = number
   default     = 25
 

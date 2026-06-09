@@ -30,11 +30,13 @@ output "next_steps" {
     To get your public IP and SSH command:
       aws ec2 describe-instances \
         --filters "Name=tag:Name,Values=${var.client_name}-private-ai-gpu" \
+        --region ${var.region} \
         --query "Reservations[0].Instances[0].PublicIpAddress" \
         --output text
 
     Note: user_data.sh (auto-installs Ollama, NVIDIA drivers, Hermes) 
     is not included in the free tier. Manual setup required.
+    
     Full Blueprint: https://payhip.com/b/nkpSv
 
   EOT
